@@ -6,6 +6,7 @@ import Landing from "./pages/landing/Landing";
 import Subscriptions from "./pages/subscriptions/Subscriptions"; // Import the new page
 import RequireAuth from "./components/RequireAuth";
 import Header from "./components/Header/Header";
+import { Toaster } from 'react-hot-toast';
 import Footer from "./components/Footer/Footer";
 import "./App.scss";
 
@@ -14,6 +15,7 @@ const MainLayout = () => {
     <div className="app-container">
       <Header />
       <main className="main-content">
+      <Toaster position="top-center" reverseOrder={false} />
         <Outlet />
       </main>
       <Footer />

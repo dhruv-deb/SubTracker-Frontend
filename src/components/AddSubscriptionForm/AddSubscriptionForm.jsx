@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import toast from 'react-hot-toast'; // Import toast for better feedback
 import styles from "./AddSubscriptionForm.module.scss";
 
 const AddSubscriptionForm = ({ onSuccess }) => {
   const { BASE_URL } = useAuth();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [currency, setCurrency] = useState("USD"); // New state
+  const [currency, setCurrency] = useState("USD");
   const [frequency, setFrequency] = useState("monthly");
-  const [category, setCategory] = useState("other"); // New state
-  const [paymentMethod, setPaymentMethod] = useState("credit_card"); // New state
+  const [category, setCategory] = useState("other");
+  const [paymentMethod, setPaymentMethod] = useState("credit_card");
   const [startDate, setStartDate] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
+    const toastId = toast.loading('Adding subscription...'); // Show loading toast
 
     const payload = {
       name,
@@ -38,9 +38,14 @@ const AddSubscriptionForm = ({ onSuccess }) => {
       });
 
       const data = await res.json();
+      // --- FIX: Check res.ok to determine success or failure ---
       if (!res.ok) {
-        throw new Error(data.message || "Failed to add subscription");
+        // --- FIX: Check for data.error from the backend middleware ---
+        throw new Error(data.error || "Failed to add subscription");
       }
+
+      // On success, show a success toast
+      toast.success('Subscription added!', { id: toastId });
 
       // Reset all form fields
       setName("");
@@ -50,9 +55,13 @@ const AddSubscriptionForm = ({ onSuccess }) => {
       setCategory("other");
       setPaymentMethod("credit_card");
       setStartDate("");
+      
+      // --- FIX: This will now be called correctly on success ---
       onSuccess();
-    } catch (err){
-      setError(err.message);
+
+    } catch (err) {
+      // On failure, show a specific error toast
+      toast.error(err.message, { id: toastId });
     } finally {
       setLoading(false);
     }
@@ -113,7 +122,6 @@ const AddSubscriptionForm = ({ onSuccess }) => {
         onChange={(e) => setStartDate(e.target.value)}
         required
       />
-      {error && <p className={styles.error}>{error}</p>}
       <button type="submit" disabled={loading}>
         {loading ? "Adding..." : "Add Subscription"}
       </button>

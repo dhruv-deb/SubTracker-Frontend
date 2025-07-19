@@ -1,36 +1,39 @@
-
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext"; 
-import styles from "./Signup.module.scss";
+import { useAuth } from "../../context/AuthContext";
+import toast from 'react-hot-toast';
+import styles from "./SignUp.module.scss";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const { BASE_URL } = useAuth(); 
+  const [loading, setLoading] = useState(false);
+  const { BASE_URL } = useAuth();
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    const toastId = toast.loading('Creating account...');
+
     try {
       const res = await fetch(`${BASE_URL}/api/v1/auth/sign-up`, {
         method: "POST",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name, password }),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Signup failed");
 
-      alert("Account created! Please log in.");
-      navigate("/login");
+      toast.success('Account created! Please log in.', { id: toastId });
+      navigate("/dashboard");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message || 'Signup failed.', { id: toastId });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,8 +65,8 @@ const SignUp = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className={styles.button}>
-          Sign Up
+        <button type="submit" className={styles.button} disabled={loading}>
+          {loading ? 'Creating...' : 'Sign Up'}
         </button>
       </form>
     </div>
@@ -71,3 +74,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+

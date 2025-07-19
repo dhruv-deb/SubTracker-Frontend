@@ -1,16 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import toast from 'react-hot-toast';
 import styles from "./Login.module.scss";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login, BASE_URL } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    const toastId = toast.loading('Logging in...');
+
     try {
       const res = await fetch(`${BASE_URL}/api/v1/auth/sign-in`, {
         method: "POST",
@@ -21,10 +26,13 @@ const Login = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login failed");
       
-      login(data.data.user); // Update global state
-      navigate("/dashboard"); // Navigate to dashboard
+      login(data.data.user);
+      toast.success('Login successful!', { id: toastId });
+      navigate("/dashboard");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message || 'Login failed.', { id: toastId });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,8 +56,8 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className={styles.button}>
-          Log In
+        <button type="submit" className={styles.button} disabled={loading}>
+          {loading ? 'Logging in...' : 'Log In'}
         </button>
       </form>
     </div>
@@ -57,3 +65,4 @@ const Login = () => {
 };
 
 export default Login;
+
