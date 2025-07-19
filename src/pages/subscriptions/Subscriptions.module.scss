@@ -1,0 +1,149 @@
+.container {
+  width: 100%;
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+}
+
+.subList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.subItem {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.subItemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  gap: 1rem;
+}
+
+.subInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-grow: 1; // Allows the name to take up available space
+  strong {
+    font-weight: 600;
+    color: #1f2937;
+  }
+}
+
+.subMainDetails {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  color: #6b7280;
+  font-size: 0.9rem;
+  flex-shrink: 0; // Prevents this section from shrinking
+}
+
+// --- NEW STYLES for Status Text ---
+.statusText {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  
+  &.active {
+    background-color: #dcfce7; // green-100
+    color: #166534; // green-800
+  }
+  &.inactive {
+    background-color: #f3f4f6; // gray-100
+    color: #4b5563; // gray-600
+  }
+  &.cancelled {
+    background-color: #fef3c7; // amber-100
+    color: #92400e; // amber-800
+  }
+  &.expired {
+    background-color: #fee2e2; // red-100
+    color: #991b1b; // red-800
+  }
+}
+
+.subPrice {
+  font-weight: 500;
+}
+
+.chevron {
+  transition: transform 0.3s ease;
+  &.expanded {
+    transform: rotate(180deg);
+  }
+}
+
+.subItemDetails {
+  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  p {
+    margin: 0 0 0.5rem;
+    color: #374151;
+    strong {
+      color: #111827;
+    }
+  }
+}
+
+.actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  &:hover {
+    background-color: #e5e7eb;
+  }
+  &.cancelBtn:hover, &.deleteBtn:hover {
+    background-color: #fef2f2;
+    color: #b91c1c;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// --- NEW STYLES for Expired Button ---
+.expiredBtn {
+  background-color: #fef2f2;
+  color: #991b1b;
+  &:hover {
+    background-color: #fef2f2;
+    color: #991b1b;
+  }
+}

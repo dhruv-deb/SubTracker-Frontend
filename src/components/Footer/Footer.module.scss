@@ -1,0 +1,65 @@
+// Common Container
+%container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+// Footer Styles (from landing page)
+.footer {
+  background-color: #111827;
+  color: #9ca3af;
+  padding: 4rem 0;
+  margin-top: auto; // Pushes footer to the bottom of the page
+}
+.footerContainer {
+  @extend %container;
+}
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #374151;
+}
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.footerIcon {
+  color: #3b82f6;
+}
+.footerTitle {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: white;
+}
+.footerLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+.footerLink {
+  color: #9ca3af;
+  text-decoration: none;
+  &:hover {
+    color: white;
+  }
+}
+.footerSocial {
+  display: flex;
+  gap: 1rem;
+}
+.footerSocialLink {
+  color: #9ca3af;
+  &:hover {
+    color: white;
+  }
+}
+.footerCopyright {
+  text-align: center;
+  padding-top: 2rem;
+}
