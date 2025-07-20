@@ -38,16 +38,12 @@ const AddSubscriptionForm = ({ onSuccess }) => {
       });
 
       const data = await res.json();
-      // --- FIX: Check res.ok to determine success or failure ---
       if (!res.ok) {
-        // --- FIX: Check for data.error from the backend middleware ---
         throw new Error(data.error || "Failed to add subscription");
       }
 
-      // On success, show a success toast
       toast.success('Subscription added!', { id: toastId });
 
-      // Reset all form fields
       setName("");
       setPrice("");
       setCurrency("USD");
@@ -56,11 +52,9 @@ const AddSubscriptionForm = ({ onSuccess }) => {
       setPaymentMethod("credit_card");
       setStartDate("");
       
-      // --- FIX: This will now be called correctly on success ---
       onSuccess();
 
     } catch (err) {
-      // On failure, show a specific error toast
       toast.error(err.message, { id: toastId });
     } finally {
       setLoading(false);

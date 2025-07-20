@@ -1,14 +1,21 @@
+import React, { Suspense, lazy } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
-import Login from "./pages/login/Login";
-import SignUp from "./pages/signup/Signup";
-import Dashboard from "./pages/dashboard/Dashboard";
-import Landing from "./pages/landing/Landing";
-import Subscriptions from "./pages/subscriptions/Subscriptions"; // Import the new page
-import RequireAuth from "./components/RequireAuth";
+const Landing = lazy(() => import("./pages/landing/Landing"));
+const Login = lazy(() => import("./pages/login/Login"));
+const SignUp = lazy(() => import("./pages/signup/Signup"));
+const Dashboard = lazy(() => import("./pages/dashboard/Dashboard"));
+const Subscriptions = lazy(() => import("./pages/subscriptions/Subscriptions"));
+const RequireAuth = lazy(() => import("./components/RequireAuth"));
 import Header from "./components/Header/Header";
 import { Toaster } from 'react-hot-toast';
 import Footer from "./components/Footer/Footer";
 import "./App.scss";
+
+const PageLoader = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem' }}>
+    <p>Loading page...</p>
+  </div>
+);
 
 const MainLayout = () => {
   return (
@@ -25,29 +32,31 @@ const MainLayout = () => {
 
 function App() {
   return (
-    <Routes>
-      <Route element={<MainLayout />}>
-      <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/dashboard"
-          element={
-            <RequireAuth>
-              <Dashboard />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/subscriptions"
-          element={
-            <RequireAuth>
-              <Subscriptions />
-            </RequireAuth>
-          }
-        />
-      </Route>
-    </Routes>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route element={<MainLayout />}>
+        <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/subscriptions"
+            element={
+              <RequireAuth>
+                <Subscriptions />
+              </RequireAuth>
+            }
+          />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 
