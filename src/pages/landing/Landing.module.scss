@@ -7,10 +7,10 @@
 
 
 %container {
-  width: 100%;
+  // width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
 }
 
 
@@ -29,6 +29,11 @@
   line-height: 1.2;
   max-width: 700px;
   margin: 0 auto 1.5rem;
+
+  // Adjust font size on smaller screens
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
 }
 .heroSubtitle {
   font-size: 1.125rem;
@@ -53,16 +58,25 @@
 
 .features {
   padding: 5rem 0;
-  display: flex
+  margin: 0 0 4rem;
+    // display: flex
+}
+@media (max-width: 768px) {
+  .features {
+    padding: 3rem 0;
+    margin: 0;
+  }
 }
 .featuresContainer {
   @extend %container;
 }
 .featuresGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
+  justify-content: center;
 }
+
 .featureCard {
   background-color: #f9fafb;
   padding: 2rem;
@@ -83,6 +97,7 @@
   margin-bottom: 0.5rem;
 }
 .featureCardDescription {
+  width: auto;
   color: #6b7280;
 }
 

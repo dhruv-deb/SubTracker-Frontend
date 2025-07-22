@@ -1,6 +1,6 @@
 // Common Container
 %container {
-  width: 100%;
+  // width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -10,40 +10,114 @@
 .nav {
   background-color: #ffffff;
   border-bottom: 1px solid #e5e7eb;
-  padding: 1.5rem 0;
+  padding: 1.25rem 0; 
   width: 100%;
+  position: relative;
+  z-index: 50; 
 }
+
 .navContainer {
+  // background-color: rebeccapurple;
   @extend %container;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .navBrand {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
 }
+
 .navIcon {
   color: #3b82f6;
 }
+
 .navTitle {
   font-weight: 600;
   font-size: 1.25rem;
   color: #111827;
 }
 
-.navLinks {
+// --- Desktop Navigation ---
+// Shown on screens wider than 768px
+.navLinksDesktop {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
+// --- Mobile Navigation ---
+.hamburger {
+  display: none; // Hidden by default
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #111827;
+  padding: 0;
+
+  @media (max-width: 768px) {
+    display: block; // Visible on mobile
+  }
+}
+@media (max-width: 768px) {
+  .navLinksDesktop {
+    display: none; // Hide desktop links on mobile
+  }
+}
+.mobileNavOverlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Mobile navigation links container
+.navLinksMobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem; // Increased gap for better touch targets
+
+  // Make links larger for mobile
+  .navLink, .navCta, .logoutButton {
+    font-size: 1.125rem;
+    text-align: center;
+  }
+}
+
+// Close button for the mobile menu
+.closeButton {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #111827;
+}
+
+
+// --- Common Link & Button Styles ---
 .navLink {
   font-weight: 500;
   color: #374151;
   text-decoration: none;
+  transition: color 0.2s;
   &:hover {
     color: #3b82f6;
   }
@@ -62,7 +136,6 @@
   }
 }
 
-// Specific style for the logout button
 .logoutButton {
   background-color: #ef4444;
   color: white;

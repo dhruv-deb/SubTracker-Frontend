@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./Subscriptions.module.scss";
@@ -7,10 +8,8 @@ import EditSubscriptionModal from "../../components/EditSubscriptionModal/EditSu
 const SubscriptionItem = ({ sub, onUpdate, onDelete }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Check if the renewal date has passed and the subscription isn't already cancelled
   const isExpired = new Date(sub.renewalDate) < new Date() && sub.status !== 'cancelled';
   
-  // Determine the final status text to display
   const statusText = isExpired ? 'expired' : sub.status;
 
   const handleToggleStatus = async () => {
@@ -33,9 +32,11 @@ const SubscriptionItem = ({ sub, onUpdate, onDelete }) => {
         <div className={styles.subMainDetails}>
           <span className={`${styles.statusText} ${styles[statusText]}`}>
             {statusText}
-          </span>
-          <span className={styles.subPrice}>{sub.price} {sub.currency} / {sub.frequency}</span>
-          <ChevronDown className={`${styles.chevron} ${isExpanded ? styles.expanded : ''}`} size={20} />
+          </span> 
+          <div className={styles.subInDetail}>
+            <span className={styles.subPrice}>{sub.price} {sub.currency} / {sub.frequency}</span>
+            <ChevronDown className={`${styles.chevron} ${isExpanded ? styles.expanded : ''}`} size={20} />
+          </div>
         </div>
       </div>
       {isExpanded && (
@@ -102,6 +103,7 @@ const Subscriptions = () => {
       fetchAllSubscriptions();
     } catch (error) {
       console.error(error);
+      toast.error(error.message || "Cannot Delete");
     }
   };
 
