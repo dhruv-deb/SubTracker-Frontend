@@ -70,13 +70,16 @@ First, clone both the frontend and backend repositories to your local machine.
 
 ```bash
 # Clone the backend repository
-git clone <PASTE_YOUR_BACKEND_REPOSITORY_URL_HERE>
+git clone https://github.com/dhruv-deb/subscription-tracker-API.git
 
 # Clone the frontend repository
-git clone <PASTE_YOUR_FRONTEND_REPOSITORY_URL_HERE>
+git clone https://github.com/dhruv-deb/SubTracker-Frontend.git
 ```
 
 ## 2. Backend Setup
+
+Repository: (https://github.com/dhruv-deb/subscription-tracker-API.git)
+
  Navigate to the backend directory and install dependencies:
 ```bash
 cd <backend-folder-name>
